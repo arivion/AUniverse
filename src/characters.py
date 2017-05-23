@@ -1,13 +1,14 @@
 """
 
 """
-# TODO: name IO somehow (file/input options?)
+# TODO: error handling, file input, groups with only a subset of characters
+# TODO: (maybe store results of groups and be able to create groups from only that?)
+# TODO: fix input (allow space after comma)
 
 import random
 
 
 class Group:
-
     def __init__(self, name: str):
         self.name = name
         self.members = []
@@ -47,7 +48,7 @@ def group_up(names: tuple, groups: list, force: str):
     names_list = list(names)
     if force == "y" and len(names) < len(groups):
         choice = input("Cannot force one member per group." +
-                       "Proceed anyway? [y/n]: ").lower()
+                       " Proceed anyway? [y/n]: ").lower()
         if choice == "n":
             return
         else:
