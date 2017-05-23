@@ -18,11 +18,11 @@ class Group:
 
 def help_info():
     print("Usage:")
-    print("\tships: pair up characters (with a chance of some being single)")
-    print("\tchoose: pick a character at random")
-    print("\tgroups: randomly assign characters to groups")
-    print("\thelp: print usage information")
-    print("\tquit: exit the program")
+    print("  ships: pair up characters (with a chance of some being single)")
+    print("  choose: pick a character at random")
+    print("  groups: randomly assign characters to groups")
+    print("  help: print usage information")
+    print("  quit: exit the program")
 
 
 def shipping(names: tuple):
@@ -34,7 +34,8 @@ def shipping(names: tuple):
         partner = names_list[random.randint(0, len(names_list)-1)]
         names_list.remove(partner)
         if random.randint(0, 9) == 0:
-            print(name + " and " + partner + " are both single.")
+            print(name + " is single.")
+            print(partner + " is single.")
         else:
             print(name + " and " + partner + " are together.")
     if len(names_list) != 0:
@@ -65,7 +66,7 @@ def group_up(names: tuple, groups: list, force: str):
     for character in names_list:
         groups_list[random.randint(0, len(groups_list)-1)].add_member(character)
     for group in groups_list:
-        print("Members of group " + group.name + ": ", end='')
+        print("  Members of group " + group.name + ": ", end='')
         for character in group.members:
             print(character + " ", end='')
         print(" ")
@@ -73,9 +74,13 @@ def group_up(names: tuple, groups: list, force: str):
 
 def main():
     random.seed(None)
-    names = ("Jack", "Lana", "Scott", "Mary", "Wren", "Alice",
-             "Elijah", "Claire", "Silas", "Emily", "Teddy", "Sam")
-
+    enter = input("Would you like to enter character names? [y/n]: ").lower()
+    if enter == "y":
+        names = tuple(input("Enter names separated by commas: ").split(","))
+    else:
+        names = ("Jack", "Lana", "Scott", "Mary", "Wren", "Alice",
+                 "Elijah", "Claire", "Silas", "Emily", "Teddy", "Sam")
+    help_info()
     while 1:
         command = input("> ").lower()
         if command == "quit":
