@@ -43,10 +43,8 @@ def shipping(names: tuple):
 
 
 def group_up(names: tuple, groups: list, force: str):
-
     groups_list = []
     names_list = list(names)
-
     if force == "y" and len(names) < len(groups):
         choice = input("Cannot force one member per group." +
                        "Proceed anyway? [y/n]: ").lower()
@@ -54,10 +52,8 @@ def group_up(names: tuple, groups: list, force: str):
             return
         else:
             force = "n"
-
     for name in groups:
         groups_list.append(Group(name))
-
     if force == "y":
         for group in groups_list:
             name = names_list[random.randint(0, len(names_list)-1)]
@@ -90,7 +86,7 @@ def main():
         elif command == "ships":
             shipping(names)
         elif command == "groups":
-            groups = input("Enter the names of the groups, separated by only commas:\n")
+            groups = input("Enter the names of the groups, separated by commas:\n")
             groups = groups.split(",")
             force = input("Force at least one character per group? [y/n]: ").lower()
             group_up(names, groups, force)
