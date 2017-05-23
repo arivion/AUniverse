@@ -40,7 +40,7 @@ def shipping(names: tuple):
         else:
             print(name + " and " + partner + " are together.")
     if len(names_list) != 0:
-        print(names_list[0] + "")
+        print(names_list[0] + " is single.")
 
 
 def group_up(names: tuple, groups: list, force: str):
@@ -73,7 +73,7 @@ def main():
     random.seed(None)
     enter = input("Would you like to enter character names? [y/n]: ").lower()
     if enter == "y":
-        names = tuple(input("Enter names separated by commas: ").split(","))
+        names = tuple(input("Enter names separated by commas: ").split(", "))
     else:
         names = ("Jack", "Lana", "Scott", "Mary", "Wren", "Alice",
                  "Elijah", "Claire", "Silas", "Emily", "Teddy", "Sam")
@@ -88,7 +88,7 @@ def main():
             shipping(names)
         elif command == "groups":
             groups = input("Enter the names of the groups, separated by commas:\n")
-            groups = groups.split(",")
+            groups = groups.split(", ")
             force = input("Force at least one character per group? [y/n]: ").lower()
             group_up(names, groups, force)
         elif command == "choose":
