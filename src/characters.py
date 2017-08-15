@@ -100,22 +100,15 @@ def group_up(names: tuple, master: str, groups: list, force: str):
     """
     main_group = Group(master)
     names_list = list(names)
-    if force == "y" and len(names) < len(groups):
-        choice = input("Cannot force one member per group." +
-                       " Proceed anyway? [y/n]: ").lower()
-        if choice == "n":
-            return
-        else:
-            force = "n"
     for name in groups:
         main_group.add_sub(Group(name))
-    if force == "y":
-        for group in main_group.members:
-            name = names_list[random.randint(0, len(names_list)-1)]
-            names_list.remove(name)
-            group.add_member(name)
     for character in names_list:
-        main_group.members[random.randint(0, len(main_group.members)-1)].add_member(character)
+        while 1:
+            group = main_group.members[random.randint(0, len(main_group.members)-1)]
+            if (force == 'y' or force == 'yes') and len(group.members) >= len(names) // len(groups):
+                continue
+            break
+        group.add_member(character)
     for group in main_group.members:
         print("  Members of group " + group.name + ": ", end='')
         for character in group.members:
@@ -147,7 +140,7 @@ def manual():
             group_cat = input("Enter group category (eg Careers, Class, Race, etc): ")
             groups = input("Enter the names of the groups, separated by commas:\n")
             groups = groups.split(", ")
-            force = input("Force at least one character per group? [y/n]: ").lower()
+            force = input("Attempt to Balance Groups? [y/n]: ").lower()
             group_up(names, group_cat, groups, force)
         elif command == "choose":
             print(names[random.randint(0, len(names)-1)])
