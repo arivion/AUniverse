@@ -38,8 +38,6 @@ class Group:
         """
         self.members.append(subgroup)
 
-master_group = Group("master")
-
 
 class Character:
     def __init__(self, name: str):
@@ -81,6 +79,8 @@ def shipping(characters: tuple):
         if random.randint(0, 9) == 0:
             print(char.name + " is single.")
             print(partner.name + " is single.")
+            char.partner = None
+            partner.partner = None
         else:
             print(char.name + " and " + partner.name + " are together.")
             char.partner = partner.name
@@ -121,11 +121,9 @@ def group_up(names: tuple, master: str, groups: list, force: str):
         for character in group.members:
             print(character + " ", end='')
         print(" ")
-    if input("Store grouping results? [y/n]: ").lower() == 'y':
-        master_group.add_sub(main_group)
 
 
-def main():
+def manual():
     random.seed(None)
     characters = []
     enter = input("Would you like to enter character names? [y/n]: ").lower()
@@ -159,5 +157,3 @@ def main():
             print("Whoops, that's not right!")
             help_info()
 
-
-main()
