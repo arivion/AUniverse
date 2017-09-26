@@ -4,13 +4,6 @@ Application to help brainstorm character relationships and loyalties
 
 :author: Alexia Christie
 """
-# TODO: file input, change set (overall and temporarily)
-# TODO: function to get groups associated with one name
-# TODO: characters are objects, allow use of subset of characters w/ certain traits
-# TODO: (maybe store results of groups and be able to create groups from only that?)
-# TODO: file OUTPUT too, jackass
-# TODO: if there aren't enough groups to do one character each, just do max one per group
-# TODO: make add_sub and add_member one function?
 
 import random
 
