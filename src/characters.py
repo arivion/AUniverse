@@ -38,17 +38,6 @@ class Group:
         """
         self.members.append(subgroup)
 
-"""
-class Character:
-    def __init__(self, name: str):
-        """"""
-        Creates a character
-        :param name: name of the character
-        """"""
-        self.name = name
-        self.partner = ""
-"""
-
 
 def help_info():
     """
@@ -73,10 +62,12 @@ def shipping(characters: tuple):
     char_list = list(characters)
     pairs = len(char_list) // 2
     for pair in range(0, pairs):
+        # After choosing a character, remove them from the list to prevent redundancy.
         char = char_list[random.randint(0, len(char_list)-1)]
         char_list.remove(char)
         partner = char_list[random.randint(0, len(char_list)-1)]
         char_list.remove(partner)
+        # Display results, with a 10% chance of the characters both being single.
         if random.randint(0, 9) == 0:
             print(char + " is single.")
             print(partner + " is single.")
@@ -101,12 +92,12 @@ def group_up(names: tuple, master: str, groups: list, force: str):
     for name in groups:
         main_group.add_sub(Group(name))
     for character in names_list:
+        # TODO: fix known issue where, when num of groups would leave a remainder character, loop is infinite.
         while 1:
             group = main_group.members[random.randint(0, len(main_group.members)-1)]
             counter += 1
+            # If balancing results, pick a different group if this one has enough.
             if (force == 'y' or force == 'yes') and len(group.members) >= (len(names) // len(groups)):
-                if counter > len(names) - (len(names) % len(groups)):
-                    break
                 continue
             break
         group.add_member(character)
@@ -119,17 +110,12 @@ def group_up(names: tuple, master: str, groups: list, force: str):
 
 def main():
     random.seed(None)
-    # characters = []
     enter = input("Would you like to enter character names? [y/n]: ").lower()
     if enter == "y":
         names = tuple(input("Enter names separated by commas: ").split(", "))
     else:
         names = ("Jack", "Lana", "Scott", "Mary", "Wren", "Alice",
                  "Elijah", "Claire", "Silas", "Emily", "Teddy", "Sam")
-        """
-    for name in names:
-        characters.append(Character(name))
-        """
     help_info()
     while 1:
         command = input("> ").lower()
