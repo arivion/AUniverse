@@ -38,15 +38,16 @@ class Group:
         """
         self.members.append(subgroup)
 
-
+"""
 class Character:
     def __init__(self, name: str):
-        """
+        """"""
         Creates a character
         :param name: name of the character
-        """
+        """"""
         self.name = name
         self.partner = ""
+"""
 
 
 def help_info():
@@ -77,14 +78,10 @@ def shipping(characters: tuple):
         partner = char_list[random.randint(0, len(char_list)-1)]
         char_list.remove(partner)
         if random.randint(0, 9) == 0:
-            print(char.name + " is single.")
-            print(partner.name + " is single.")
-            char.partner = None
-            partner.partner = None
+            print(char + " is single.")
+            print(partner + " is single.")
         else:
-            print(char.name + " and " + partner.name + " are together.")
-            char.partner = partner.name
-            partner.partner = partner.name
+            print(char + " and " + partner + " are together.")
     if len(char_list) != 0:
         print(char_list[0] + " is single.")
 
@@ -95,17 +92,21 @@ def group_up(names: tuple, master: str, groups: list, force: str):
     :param names: character names
     :param master: name of group category
     :param groups: groups
-    :param force: whether to force at least one per group
+    :param force: whether to balance groups
     :return: None
     """
     main_group = Group(master)
     names_list = list(names)
+    counter = 0
     for name in groups:
         main_group.add_sub(Group(name))
     for character in names_list:
         while 1:
             group = main_group.members[random.randint(0, len(main_group.members)-1)]
-            if (force == 'y' or force == 'yes') and len(group.members) >= len(names) // len(groups):
+            counter += 1
+            if (force == 'y' or force == 'yes') and len(group.members) >= (len(names) // len(groups)):
+                if counter > len(names) - (len(names) % len(groups)):
+                    break
                 continue
             break
         group.add_member(character)
@@ -116,17 +117,19 @@ def group_up(names: tuple, master: str, groups: list, force: str):
         print(" ")
 
 
-def manual():
+def main():
     random.seed(None)
-    characters = []
+    # characters = []
     enter = input("Would you like to enter character names? [y/n]: ").lower()
     if enter == "y":
         names = tuple(input("Enter names separated by commas: ").split(", "))
     else:
         names = ("Jack", "Lana", "Scott", "Mary", "Wren", "Alice",
                  "Elijah", "Claire", "Silas", "Emily", "Teddy", "Sam")
+        """
     for name in names:
         characters.append(Character(name))
+        """
     help_info()
     while 1:
         command = input("> ").lower()
@@ -135,7 +138,7 @@ def manual():
         elif command == "help":
             help_info()
         elif command == "ships":
-            shipping(tuple(characters))
+            shipping(tuple(names))
         elif command == "groups":
             group_cat = input("Enter group category (eg Careers, Class, Race, etc): ")
             groups = input("Enter the names of the groups, separated by commas:\n")
@@ -150,3 +153,5 @@ def manual():
             print("Whoops, that's not right!")
             help_info()
 
+
+main()
