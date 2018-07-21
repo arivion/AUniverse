@@ -59,12 +59,8 @@ def shipping(characters: tuple):
         char_list.remove(char)
         partner = char_list[random.randint(0, len(char_list)-1)]
         char_list.remove(partner)
-        # Display results, with a 10% chance of the characters both being single.
-        if random.randint(0, 9) == 0:
-            print(char + " is single.")
-            print(partner + " is single.")
-        else:
-            print(char + " and " + partner + " are together.")
+        # Display results
+        print(char + " and " + partner + " are together.")
     if len(char_list) != 0:
         print(char_list[0] + " is single.")
 
@@ -103,6 +99,8 @@ def group_up(names: tuple, master: str, groups: list, force: str):
 def main():
     random.seed(None)
     names = tuple(input("Enter names separated by commas: ").split(","))
+    for name in names:
+        name.lstrip().rstrip()
     help_info()
     while 1:
         command = input("> ").lower()
@@ -112,12 +110,6 @@ def main():
             help_info()
         elif command == "ships":
             shipping(tuple(names))
-        elif command == "groups":
-            group_cat = input("Enter group category (eg Careers, Class, Race, etc): ")
-            groups = input("Enter the names of the groups, separated by commas:\n")
-            groups = groups.split(", ")
-            force = input("Attempt to Balance Groups? [y/n]: ").lower()
-            group_up(names, group_cat, groups, force)
         elif command == "choose":
             print(names[random.randint(0, len(names)-1)])
         elif command == "names":
