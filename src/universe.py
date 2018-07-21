@@ -1,10 +1,9 @@
 """
-:file: characters.py
+:file: universe.py
 Application to help brainstorm character relationships and loyalties
 
 :author: Alexia Christie
 """
-
 import random
 
 
@@ -90,7 +89,7 @@ def group_up(names: tuple, master: str, groups: list, force: str):
             group = main_group.members[random.randint(0, len(main_group.members)-1)]
             counter += 1
             # If balancing results, pick a different group if this one has enough.
-            if (force == 'y' or force == 'yes') and len(group.members) >= (len(names) // len(groups)):
+            if (force == 'y' or force == 'yes') and len(group.members) >= (len(names) // len(groups) + 1):
                 continue
             break
         group.add_member(character)
@@ -103,12 +102,7 @@ def group_up(names: tuple, master: str, groups: list, force: str):
 
 def main():
     random.seed(None)
-    enter = input("Would you like to enter character names? [y/n]: ").lower()
-    if enter == "y":
-        names = tuple(input("Enter names separated by commas: ").split(", "))
-    else:
-        names = ("Jack", "Lana", "Scott", "Mary", "Wren", "Alice",
-                 "Elijah", "Claire", "Silas", "Emily", "Teddy", "Sam")
+    names = tuple(input("Enter names separated by commas: ").split(","))
     help_info()
     while 1:
         command = input("> ").lower()
