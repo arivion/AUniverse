@@ -39,7 +39,6 @@ def help_info():
     print("Usage:")
     print("  ships: pair up characters (with a chance of some being single)")
     print("  choose: pick a character at random")
-    print("  groups: randomly assign characters to groups")
     print("  names: display list of names")
     print("  help: print usage information")
     print("  quit: exit the program")
@@ -48,8 +47,8 @@ def help_info():
 def shipping(characters: tuple):
     """
     Pairs up characters into couples
-    :param characters: 
-    :return: 
+    :param characters:
+    :return:
     """
     char_list = list(characters)
     pairs = len(char_list) // 2
