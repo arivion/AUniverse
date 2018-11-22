@@ -13,7 +13,7 @@ def help_info():
     :return: None
     """
     print("Usage:")
-    print("  ships: pair up characters (with a chance of some being single)")
+    print("  ships: pair up characters (with a single character if there is an odd number)")
     print("  choose: pick a character at random")
     print("  names: display list of names")
     print("  help: print usage information")
@@ -37,7 +37,7 @@ def shipping(characters: tuple):
         char_list.remove(partner)
         # Display results
         print(char + " and " + partner + " are together.")
-        
+
     if len(char_list) != 0:
         print(char_list[0] + " is single.")
 
