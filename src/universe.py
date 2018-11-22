@@ -28,6 +28,7 @@ def shipping(characters: tuple):
     """
     char_list = list(characters)
     pairs = len(char_list) // 2
+
     for pair in range(0, pairs):
         # After choosing a character, remove them from the list to prevent redundancy.
         char = char_list[random.randint(0, len(char_list)-1)]
@@ -36,16 +37,18 @@ def shipping(characters: tuple):
         char_list.remove(partner)
         # Display results
         print(char + " and " + partner + " are together.")
+        
     if len(char_list) != 0:
         print(char_list[0] + " is single.")
 
 
 def main():
     random.seed(None)
+
     names = tuple(input("Enter names separated by commas: ").split(","))
     for name in names:
         name.lstrip().rstrip()
-    help_info()
+
     while 1:
         command = input("> ").lower()
         if command == "quit":
