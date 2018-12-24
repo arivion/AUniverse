@@ -27,11 +27,11 @@ def shipping(characters: tuple):
     :param characters:
     :return: a dictionary mapping character:character
     """
-    char_list = list(characters)
-    pairs = len(char_list) // 2
     pair_map = {}
 
     while True:
+        char_list = list(characters)
+        pairs = len(char_list) // 2
 
         for pair in range(0, pairs):
             # After choosing a character, remove them from the list to prevent redundancy.
@@ -45,11 +45,11 @@ def shipping(characters: tuple):
 
         if len(char_list) != 0:
             print(char_list[0] + " is single.")
+            pair_map[char_list[0]] = 'Nobody :('
 
         roll_again = input('Roll again? : ')
-        if roll_again.lower() is 'y' or roll_again.lower() is 'yes':
-            continue
-        break
+        if (not roll_again.lower() == 'y') and (not roll_again.lower() == 'yes'):
+            break
 
     return pair_map
 
@@ -59,51 +59,52 @@ def assign(characters: tuple):
     Assigns characters to roles
     :param characters: a tuple containing the names of the characters
     :return: a dictionary mapping character:role
+    TODO: be able to limit automatic selection to a certain subset
     """
-    char_list = list(characters)
     role_map = {}
 
-    print('Enter any roles that you want randomly assigned.')
-    print('If there are more characters than roles, you will be given the option of manually setting roles'
-          ' for those left over.')
-    print('There are [' + str(len(characters)) + '] characters.')
-    print('Enter roles here, separated by commas:')
-    roles = input().split(',')
-
     while True:
+        char_list = list(characters)
 
-        for role in roles:
-            role.lstrip().rstrip()
-            character = char_list[random.randint(0, len(char_list)-1)]
+        while True:
+
+            role = input('Enter a role you want randomly assigned '
+                                 'OR the name of a character you want to assign, or reassign, a role to: ')
+
+            if role in characters:
+                character = role
+                role = input('Assign a role for [' + role + ']')
+            else:
+                character = char_list[random.randint(0, len(char_list)-1)]
             role_map[character] = role
             char_list.remove(character)
             print(character + ' has the following role: ' + role)
+            print('Remaining characters: ' + str(char_list))
             if not char_list:
                 break
+            print('\n')
 
-        for leftover_char in char_list:
-            role = input('Assign a role for ' + leftover_char + ': ')
-            role_map[leftover_char] = role
-
+        for pair in role_map:
+            print(pair + " : " + role_map.get(pair))
         roll_again = input('Roll again? : ')
-        if roll_again.lower() is 'y' or roll_again.lower() is 'yes':
-            continue
-        break
+        if (not roll_again.lower() == 'y') and (not roll_again.lower() == 'yes'):
+            break
 
     return role_map
 
 
 def main():
     random.seed(None)
+    names = []
 
-    names = tuple(input("Enter names separated by commas: ").split(","))
-    for name in names:
-        name.lstrip().rstrip()
+    names_unstripped = tuple(input("Enter names separated by commas: ").split(","))
+    for name in names_unstripped:
+        names.append(name.lstrip().rstrip())
     ship_dict = {}
     role_dict = {}
 
     while 1:
-        command = input("> ").lower()
+        command = input("\n> ").lower()
         if command == "quit":
             break
         elif command == "help":
@@ -119,6 +120,16 @@ def main():
         else:
             print("Whoops, that's not right!")
             help_info()
+
+    filename = input('Enter the name of the universe: ')
+    file = open(filename + '.txt', 'w+')
+    file.write('Pairings:\n')
+    for pair in ship_dict:
+        file.write(pair + " : " + ship_dict.get(pair) + "\n")
+    file.write('\n')
+    file.write('Roles:')
+    for pair in role_dict:
+        file.write(pair + " : " + ship_dict.get(pair) + "\n")
 
 
 main()
