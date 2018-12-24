@@ -100,6 +100,7 @@ def main():
     names_unstripped = tuple(input("Enter names separated by commas: ").split(","))
     for name in names_unstripped:
         names.append(name.lstrip().rstrip())
+    names = tuple(names)
     ship_dict = {}
     role_dict = {}
 
