@@ -5,6 +5,7 @@ Application to help brainstorm character relationships and loyalties
 :author: Alexia Christie
 """
 import random
+import sys
 
 
 def help_info():
@@ -69,7 +70,7 @@ def assign(characters: tuple):
         while True:
 
             role = input('Enter a role you want randomly assigned '
-                                 'OR the name of a character you want to assign, or reassign, a role to: ')
+                         'OR the name of a character you want to assign, or reassign, a role to: ')
 
             if role in characters:
                 character = role
@@ -95,12 +96,14 @@ def assign(characters: tuple):
 
 def main():
     random.seed(None)
-    names = []
 
-    names_unstripped = tuple(input("Enter names separated by commas: ").split(","))
-    for name in names_unstripped:
-        names.append(name.lstrip().rstrip())
-    names = tuple(names)
+    if len(sys.argv) == 1:
+        print("Oops! This needs a file listing character names to run. "
+              "Expected usage: python universe.py [character file]")
+        exit(1)
+
+    names_unstripped = open(sys.argv[1])
+    names = tuple(s.rstrip() for s in tuple(names_unstripped))
     ship_dict = {}
     role_dict = {}
 
@@ -122,8 +125,11 @@ def main():
             print("Whoops, that's not right!")
             help_info()
 
-    filename = input('Enter the name of the universe: ')
-    file = open(filename + '.txt', 'w+')
+    filename = input('Enter a name for the output file, or \'no\' to not make one: ')
+    if filename == 'no':
+        exit(0)
+
+    file = open(filename, 'w+')
     file.write('Pairings:\n')
     for pair in ship_dict:
         file.write(pair + " : " + ship_dict.get(pair) + "\n")
